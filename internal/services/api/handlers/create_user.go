@@ -30,10 +30,10 @@ func validateCreateUserRequest(r resources.CreateUserResponse) error {
 		return smtpErr.Err
 	}
 
-	err =  validation.Errors{
-		"/implementation/attributes/firstname":	validation.Validate(&r.Data.Attributes.Firstname, validation.Required),
-		"/implementation/attributes/lastname":	validation.Validate(&r.Data.Attributes.Lastname, validation.Required),
-		"/implementation/attributes/password":	validation.Validate(&r.Data.Attributes.Password, validation.Required),
+	err = validation.Errors{
+		"/implementation/attributes/firstname": validation.Validate(&r.Data.Attributes.Firstname, validation.Required),
+		"/implementation/attributes/lastname":  validation.Validate(&r.Data.Attributes.Lastname, validation.Required),
+		"/implementation/attributes/password":  validation.Validate(&r.Data.Attributes.Password, validation.Required),
 	}.Filter()
 	if err != nil {
 		return err
@@ -54,10 +54,11 @@ type NewUserRequest struct {
 	Password  string `validate:"min=8,max=100"`
 }
 
-func ValidateNewUser (r resources.CreateUserResponse) error {
+func ValidateNewUser(r resources.CreateUserResponse) error {
 	nur := NewUserRequest{
 		Firstname: r.Data.Attributes.Firstname,
-		Password: r.Data.Attributes.Password,
+		Lastname:  r.Data.Attributes.Lastname,
+		Password:  r.Data.Attributes.Password,
 	}
 	errs := validator.Validate(nur)
 	return errs
