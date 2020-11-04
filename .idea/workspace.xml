@@ -20,44 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4138654-478c-45b8-bb3b-e0f10cd5b408" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/internal/services/api/handlers/create_user.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/assets/assets-packr.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/db-assets/assets-packr.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/assets/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/db-assets/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/assets/migrations/001_initial.sql" beforeDir="false" afterPath="$PROJECT_DIR$/internal/db-assets/migrations/001_initial.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/assets/packrd/packed-packr.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/db-assets/packrd/packed-packr.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/cli/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/cli/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/cli/migrate.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/cli/migrate.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/data/postgres/users.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/postgres/implementation/users.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/data/users.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/postgres/interfaces/users.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/resources/included.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/resources/included.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/resources/model_ask_recovery.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/resources/model_ask_recovery_attributes.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/resources/model_check_token.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/resources/model_check_token.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/resources/model_complete_recovery.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/resources/model_complete_recovery_attributes.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/resources/model_create_user.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/resources/model_create_user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/resources/model_create_user_attributes.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/resources/model_create_user_attributes.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/resources/model_details.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/resources/model_details.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/resources/model_get_user.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/resources/model_get_user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/resources/model_login_user.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/resources/model_login_user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/resources/model_relation.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/resources/model_relation.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/resources/model_relation_collection.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/resources/model_relation_collection.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/services/handlers/ask_recovery.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/services/handlers/check_token.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/services/api/handlers/check_token.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/services/handlers/complete_recovery.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/services/handlers/create_user.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/services/handlers/ctx.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/services/api/handlers/ctx.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/services/handlers/get_user.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/services/api/handlers/get_user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/services/handlers/login_user.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/services/api/handlers/login_user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/services/requests/check_token.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/services/requests/complete_recovery.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/services/requests/create_user.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/services/requests/login_user.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/services/requests/regexes.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/services/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/services/api/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/services/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/services/api/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,25 +142,25 @@
     </state>
     <state x="184" y="79" width="1071" height="700" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1604486783072" />
     <state x="184" y="92" width="1071" height="700" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.789@0.23.1440.789" timestamp="1604519203541" />
-    <state width="1398" height="176" key="GridCell.Tab.0.bottom" timestamp="1604519417956">
+    <state width="1398" height="176" key="GridCell.Tab.0.bottom" timestamp="1604519555904">
       <screen x="0" y="23" width="1440" height="789" />
     </state>
     <state width="1398" height="202" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1604486825350" />
-    <state width="1398" height="176" key="GridCell.Tab.0.bottom/0.23.1440.789@0.23.1440.789" timestamp="1604519417956" />
-    <state width="1398" height="176" key="GridCell.Tab.0.center" timestamp="1604519417956">
+    <state width="1398" height="176" key="GridCell.Tab.0.bottom/0.23.1440.789@0.23.1440.789" timestamp="1604519555904" />
+    <state width="1398" height="176" key="GridCell.Tab.0.center" timestamp="1604519555903">
       <screen x="0" y="23" width="1440" height="789" />
     </state>
     <state width="1398" height="202" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1604486825348" />
-    <state width="1398" height="176" key="GridCell.Tab.0.center/0.23.1440.789@0.23.1440.789" timestamp="1604519417956" />
-    <state width="1398" height="176" key="GridCell.Tab.0.left" timestamp="1604519417955">
+    <state width="1398" height="176" key="GridCell.Tab.0.center/0.23.1440.789@0.23.1440.789" timestamp="1604519555903" />
+    <state width="1398" height="176" key="GridCell.Tab.0.left" timestamp="1604519555902">
       <screen x="0" y="23" width="1440" height="789" />
     </state>
     <state width="1398" height="202" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1604486825348" />
-    <state width="1398" height="176" key="GridCell.Tab.0.left/0.23.1440.789@0.23.1440.789" timestamp="1604519417955" />
-    <state width="1398" height="176" key="GridCell.Tab.0.right" timestamp="1604519417956">
+    <state width="1398" height="176" key="GridCell.Tab.0.left/0.23.1440.789@0.23.1440.789" timestamp="1604519555902" />
+    <state width="1398" height="176" key="GridCell.Tab.0.right" timestamp="1604519555904">
       <screen x="0" y="23" width="1440" height="789" />
     </state>
     <state width="1398" height="202" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1604486825349" />
-    <state width="1398" height="176" key="GridCell.Tab.0.right/0.23.1440.789@0.23.1440.789" timestamp="1604519417956" />
+    <state width="1398" height="176" key="GridCell.Tab.0.right/0.23.1440.789@0.23.1440.789" timestamp="1604519555904" />
   </component>
 </project>
