@@ -9,12 +9,12 @@ type CreateUser struct {
 	Attributes CreateUserAttributes `json:"attributes"`
 }
 type CreateUserResponse struct {
-	Data     CreateUser `json:"implementation"`
+	Data     CreateUser `json:"data"`
 	Included Included   `json:"included"`
 }
 
 type CreateUserListResponse struct {
-	Data     []CreateUser `json:"implementation"`
+	Data     []CreateUser `json:"data"`
 	Included Included     `json:"included"`
 	Links    *Links       `json:"links"`
 }
