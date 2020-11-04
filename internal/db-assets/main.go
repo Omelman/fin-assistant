@@ -1,4 +1,4 @@
-package assets
+package db_assets
 
 import "github.com/gobuffalo/packr/v2"
 

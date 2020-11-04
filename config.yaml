@@ -10,5 +10,6 @@ db:
 listener:
   addr: :4000
 
-
-
+email:
+  address: example@mail.com
+  password: password

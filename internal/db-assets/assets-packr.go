@@ -3,6 +3,6 @@
 
 // You can use the "packr clean" command to clean up this,
 // and any other packr generated files.
-package assets
+package db_assets
 
-import _ "github.com/fin-assistant/internal/assets/packrd"
+import _ "github.com/fin-assistant/internal/db-assets/packrd"

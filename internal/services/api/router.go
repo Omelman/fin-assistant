@@ -1,15 +1,15 @@
-package services
+package api
 
 import (
 	"github.com/fin-assistant/internal/config"
-	"github.com/fin-assistant/internal/data/postgres"
-	"github.com/fin-assistant/internal/services/handlers"
+	"github.com/fin-assistant/internal/postgres/implementation"
+	"github.com/fin-assistant/internal/services/api/handlers"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"gitlab.com/distributed_lab/ape"
 )
 
-func Router(s *service, cfg config.Config) chi.Router {
+func Router( cfg config.Config) chi.Router {
 	r := chi.NewRouter()
 	r.Use(
 		middleware.SetHeader("Access-Control-Allow-Origin","*"),
@@ -17,7 +17,7 @@ func Router(s *service, cfg config.Config) chi.Router {
 		ape.LoganMiddleware(cfg.Log()),
 		ape.CtxMiddleWare(
 			handlers.CtxLog(cfg.Log()),
-			handlers.CtxUser(postgres.NewUsers(cfg.DB())),
+			handlers.CtxUser(implementation.NewUsers(cfg.DB())),
 			handlers.CtxEmail(cfg.Email()),
 		),
 	)
@@ -28,11 +28,6 @@ func Router(s *service, cfg config.Config) chi.Router {
 			r.Post("/sign-in", handlers.LoginUser)
 			r.Post("/check_token", handlers.CheckToken)
 			r.Get("/get_user/{email}", handlers.GetUser)
-
-			r.Route("/recovery", func(r chi.Router) {
-				r.Get("/{email}", handlers.AskRecovery)
-				r.Post("/", handlers.CompleteRecovery)
-			})
 		})
 	})
 

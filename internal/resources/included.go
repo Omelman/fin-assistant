@@ -15,7 +15,7 @@ type Resource interface {
 	GetKey() Key
 }
 
-// Included - an array of Resource objects that are related to the primary data and/or
+// Included - an array of Resource objects that are related to the primary implementation and/or
 // each other (“included resources”).
 type Included struct {
 	includes map[Key]json.RawMessage

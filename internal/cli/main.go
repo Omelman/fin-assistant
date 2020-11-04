@@ -2,9 +2,9 @@ package cli
 
 import (
 	"context"
+	"github.com/fin-assistant/internal/services/api"
 
 	"github.com/fin-assistant/internal/config"
-	"github.com/fin-assistant/internal/services"
 	"github.com/urfave/cli"
 	"gitlab.com/distributed_lab/kit/kv"
 	"gitlab.com/distributed_lab/logan/v3"
@@ -57,7 +57,7 @@ func Run(args []string) bool {
 			Name:   "run",
 			Before: before,
 			Action: func(_ *cli.Context) error {
-				service, err := services.NewService(context.Background(), cfg)
+				service, err := api.NewService(context.Background(), cfg)
 				if err != nil {
 					return errors.Wrap(err, "unable to create service")
 				}

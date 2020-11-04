@@ -5,6 +5,6 @@
 package resources
 
 type Relation struct {
-	Data  *Key   `json:"data,omitempty"`
+	Data  *Key   `json:"implementation,omitempty"`
 	Links *Links `json:"links,omitempty"`
 }

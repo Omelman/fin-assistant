@@ -9,12 +9,12 @@ type LoginUser struct {
 	Attributes LoginUserAttributes `json:"attributes"`
 }
 type LoginUserResponse struct {
-	Data     LoginUser `json:"data"`
+	Data     LoginUser `json:"implementation"`
 	Included Included  `json:"included"`
 }
 
 type LoginUserListResponse struct {
-	Data     []LoginUser `json:"data"`
+	Data     []LoginUser `json:"implementation"`
 	Included Included    `json:"included"`
 	Links    *Links      `json:"links"`
 }

@@ -1,10 +1,10 @@
-package postgres
+package implementation
 
 import (
 	"database/sql"
 	sq "github.com/Masterminds/squirrel"
-	"github.com/fin-assistant/internal/data"
 	"github.com/fatih/structs"
+	"github.com/fin-assistant/internal/postgres/interfaces"
 	"gitlab.com/distributed_lab/kit/pgdb"
 	"gitlab.com/distributed_lab/logan/v3/errors"
 )
@@ -20,7 +20,7 @@ type Users struct {
 	upd sq.UpdateBuilder
 }
 
-func NewUsers(db *pgdb.DB) data.Users {
+func NewUsers(db *pgdb.DB) interfaces.Users {
 	return &Users{
 		db:  db.Clone(),
 		sql: usersSelect,
@@ -28,11 +28,11 @@ func NewUsers(db *pgdb.DB) data.Users {
 	}
 }
 
-func (q *Users) New() data.Users {
+func (q *Users) New() interfaces.Users {
 	return NewUsers(q.db)
 }
 
-func (q *Users) Create(user data.User) error {
+func (q *Users) Create(user interfaces.User) error {
 	clauses := structs.Map(user)
 
 	var id int64
@@ -41,14 +41,14 @@ func (q *Users) Create(user data.User) error {
 	return err
 }
 
-func (q *Users) Transaction(fn func(q data.Users) error) (err error) {
+func (q *Users) Transaction(fn func(q interfaces.Users) error) (err error) {
 	return q.db.Transaction(func() error {
 		return fn(q)
 	})
 }
 
-func (q *Users) Get() (*data.User, error) {
-	var user data.User
+func (q *Users) Get() (*interfaces.User, error) {
+	var user interfaces.User
 	err := q.db.Get(&user, q.sql)
 	if err == sql.ErrNoRows {
 		return nil, nil
@@ -57,8 +57,8 @@ func (q *Users) Get() (*data.User, error) {
 	return &user, err
 }
 
-func (q *Users) GetByEmail(email string) (*data.User, error) {
-	var user data.User
+func (q *Users) GetByEmail(email string) (*interfaces.User, error) {
+	var user interfaces.User
 	stmt := sq.Select("*").From(usersTableName).Where("email = ?", email)
 	err := q.db.Get(&user, stmt)
 	return &user, err

@@ -1,4 +1,4 @@
-package data
+package interfaces
 
 type Users interface {
 	New() Users
@@ -19,10 +19,9 @@ type Users interface {
 
 type User struct {
 	ID          int32  `db:"id" structs:"-"`
-	Nickname    string `db:"nickname" structs:"nickname"`
+	Firstname   string `db:"firstname" structs:"firstname"`
+	Lastname    string `db:"lastname" structs:"lastname"`
 	Email       string `db:"email" structs:"email"`
-	Details     []byte `db:"details" structs:"-"`
 	Password    []byte `db:"password" structs:"password"`
 	Token       string `db:"token" structs:"token"`
-	RecoveryKey string `db:"recovery_key" structs:"recovery_key"`
 }

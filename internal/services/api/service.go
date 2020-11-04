@@ -1,4 +1,4 @@
-package services
+package api
 
 import (
 	"context"
@@ -26,7 +26,7 @@ func NewService(ctx context.Context, cfg config.Config) (*service, error) {
 func (s *service) Run() error {
 	s.logger.Info("Starting...")
 
-	r := Router(s, s.cfg)
+	r := Router(s.cfg)
 
 
 	err := http.Serve(s.cfg.Listener(), r)

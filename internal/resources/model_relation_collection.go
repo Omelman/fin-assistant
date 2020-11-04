@@ -7,7 +7,7 @@ package resources
 import "encoding/json"
 
 type RelationCollection struct {
-	Data  []Key  `json:"data"`
+	Data  []Key  `json:"implementation"`
 	Links *Links `json:"links,omitempty"`
 }
 

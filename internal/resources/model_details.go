@@ -13,7 +13,7 @@ import (
 
 type Details json.RawMessage
 
-//UnmarshalJSON - casts data to Details
+//UnmarshalJSON - casts implementation to Details
 func (d *Details) UnmarshalJSON(data []byte) error {
 	if d == nil {
 		return errors.New("regources.Details: UnmarshalJSON on nil pointer")
@@ -38,7 +38,7 @@ func (d Details) String() string {
 func (r Details) Value() (driver.Value, error) {
 	result, err := json.Marshal(r)
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to marshal Details data")
+		return nil, errors.Wrap(err, "failed to marshal Details implementation")
 	}
 
 	return result, nil
@@ -58,7 +58,7 @@ func (r *Details) Scan(src interface{}) error {
 
 	err := json.Unmarshal(data, r)
 	if err != nil {
-		return errors.Wrap(err, "failed to unmarshal Details data")
+		return errors.Wrap(err, "failed to unmarshal Details implementation")
 	}
 
 	return nil

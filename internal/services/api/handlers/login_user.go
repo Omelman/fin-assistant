@@ -2,20 +2,39 @@ package handlers
 
 import (
 	"crypto/rand"
+	"encoding/json"
+	validation "github.com/go-ozzo/ozzo-validation"
 	"time"
 
-	//"encoding/base64"
 	"encoding/hex"
 	"github.com/fin-assistant/internal/resources"
-	"github.com/fin-assistant/internal/services/requests"
 	"gitlab.com/distributed_lab/ape"
 	"gitlab.com/distributed_lab/ape/problems"
+	"gitlab.com/distributed_lab/logan/v3/errors"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
 )
 
+//request
+func NewLoginUserRequest(r *http.Request) (resources.LoginUserResponse, error) {
+	var request resources.LoginUserResponse
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		return request, errors.Wrap(err, "failed to unmarshal")
+	}
+
+	return request, validateLoginUserRequest(request)
+}
+
+func validateLoginUserRequest(r resources.LoginUserResponse) error {
+	return validation.Errors{
+		"/implementation/attributes/email":    validation.Validate(&r.Data.Attributes.Email, validation.Required),
+		"/implementation/attributes/password": validation.Validate(&r.Data.Attributes.Password, validation.Required),
+	}.Filter()
+}
+
+//
 func LoginUser(w http.ResponseWriter, r *http.Request) {
-	request, err := requests.NewLoginUserRequest(r)
+	request, err := NewLoginUserRequest(r)
 	if err != nil {
 		Log(r).WithError(err).Error("failed to parse request")
 		ape.RenderErr(w, problems.BadRequest(err)...)

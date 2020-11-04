@@ -5,7 +5,8 @@
 package resources
 
 type CreateUserAttributes struct {
-	Email    string `json:"email"`
-	Nickname string `json:"nickname"`
-	Password string `json:"password"`
+	Email     string `json:"email"`
+	Firstname string `json:"firstname"`
+	Lastname  string `json:"lastname"`
+	Password  string `json:"password"`
 }

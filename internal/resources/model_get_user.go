@@ -9,12 +9,12 @@ type GetUser struct {
 	Attributes *GetUserAttributes `json:"attributes,omitempty"`
 }
 type GetUserResponse struct {
-	Data     GetUser  `json:"data"`
+	Data     GetUser  `json:"implementation"`
 	Included Included `json:"included"`
 }
 
 type GetUserListResponse struct {
-	Data     []GetUser `json:"data"`
+	Data     []GetUser `json:"implementation"`
 	Included Included  `json:"included"`
 	Links    *Links    `json:"links"`
 }
