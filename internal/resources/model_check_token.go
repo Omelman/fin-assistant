@@ -9,12 +9,12 @@ type CheckToken struct {
 	Attributes CheckTokenAttributes `json:"attributes"`
 }
 type CheckTokenResponse struct {
-	Data     CheckToken `json:"implementation"`
+	Data     CheckToken `json:"data"`
 	Included Included   `json:"included"`
 }
 
 type CheckTokenListResponse struct {
-	Data     []CheckToken `json:"implementation"`
+	Data     []CheckToken `json:"data"`
 	Included Included     `json:"included"`
 	Links    *Links       `json:"links"`
 }
