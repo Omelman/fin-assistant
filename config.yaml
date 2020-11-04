@@ -1,0 +1,14 @@
+log:
+  level: debug
+  disable_sentry: true
+
+db:
+  url: postgres://assistant:assistant@localhost:5432/assistant?sslmode=disable
+  max_open_connection: 50
+  max_idle_connections: 50
+
+listener:
+  addr: :4000
+
+
+
