@@ -6,5 +6,5 @@ package resources
 
 type CheckTokenAttributes struct {
 	Email string `json:"email"`
-	Id    *int32 `json:"id,omitempty"`
+	Id    *int   `json:"id,omitempty"`
 }

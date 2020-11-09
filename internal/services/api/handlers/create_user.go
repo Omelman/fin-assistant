@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"github.com/badoux/checkmail"
 	"github.com/fin-assistant/internal/postgres/interfaces"
-	"github.com/fin-assistant/internal/resources"
+	"github.com/fin-assistant/internal/services/api/resources"
 	validation "github.com/go-ozzo/ozzo-validation"
 	"gitlab.com/distributed_lab/ape"
 	"gitlab.com/distributed_lab/ape/problems"

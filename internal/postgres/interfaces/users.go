@@ -6,6 +6,7 @@ type Users interface {
 	Create(User User) error
 	Get() (*User, error)
 	GetByEmail(email string) (*User, error)
+	GetById(id int) (*User, error)
 
 	SetTokenByEmail(email string, token string) error
 	SetRecoveryKeyByEmail(email string, recoveryKey string) error
@@ -18,10 +19,10 @@ type Users interface {
 }
 
 type User struct {
-	ID          int32  `db:"id" structs:"-"`
-	Firstname   string `db:"firstname" structs:"firstname"`
-	Lastname    string `db:"lastname" structs:"lastname"`
-	Email       string `db:"email" structs:"email"`
-	Password    []byte `db:"password" structs:"password"`
-	Token       string `db:"token" structs:"token"`
+	ID        int    `db:"id" structs:"-"`
+	Firstname string `db:"firstname" structs:"firstname"`
+	Lastname  string `db:"lastname" structs:"lastname"`
+	Email     string `db:"email" structs:"email"`
+	Password  []byte `db:"password" structs:"password"`
+	Token     string `db:"token" structs:"token"`
 }

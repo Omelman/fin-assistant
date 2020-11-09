@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
-	"github.com/fin-assistant/internal/resources"
+	"github.com/fin-assistant/internal/services/api/resources"
 	"github.com/go-chi/chi"
 	"gitlab.com/distributed_lab/ape"
 	"gitlab.com/distributed_lab/ape/problems"
@@ -31,11 +31,11 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response := resources.GetUserResponse {
+	response := resources.GetUserResponse{
 		Data: resources.GetUser{
 			Key: resources.NewKeyInt64(1, resources.GET_USER),
 			Attributes: &resources.GetUserAttributes{
-				Id: &user.ID,
+				Id:    &user.ID,
 				Email: &user.Email,
 			},
 		},

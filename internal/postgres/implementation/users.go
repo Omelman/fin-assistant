@@ -64,6 +64,13 @@ func (q *Users) GetByEmail(email string) (*interfaces.User, error) {
 	return &user, err
 }
 
+func (q *Users) GetById(id int) (*interfaces.User, error) {
+	var user interfaces.User
+	stmt := sq.Select("*").From(usersTableName).Where("id = ?", id)
+	err := q.db.Get(&user, stmt)
+	return &user, err
+}
+
 func (q *Users) SetTokenByEmail(email string, token string) error {
 	stmt := usersUpdate.
 		Where("email = ?", email).
@@ -142,4 +149,3 @@ func (q *Users) CheckUser(email string) (bool, error) {
 	err := q.db.Get(&count, stmt)
 	return count, err
 }
-

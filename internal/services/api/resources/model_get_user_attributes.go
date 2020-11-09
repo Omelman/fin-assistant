@@ -6,5 +6,5 @@ package resources
 
 type GetUserAttributes struct {
 	Email *string `json:"email,omitempty"`
-	Id    *int32  `json:"id,omitempty"`
+	Id    *int    `json:"id,omitempty"`
 }

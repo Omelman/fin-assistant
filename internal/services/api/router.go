@@ -9,10 +9,10 @@ import (
 	"gitlab.com/distributed_lab/ape"
 )
 
-func Router( cfg config.Config) chi.Router {
+func Router(cfg config.Config) chi.Router {
 	r := chi.NewRouter()
 	r.Use(
-		middleware.SetHeader("Access-Control-Allow-Origin","*"),
+		middleware.SetHeader("Access-Control-Allow-Origin", "*"),
 		ape.RecoverMiddleware(cfg.Log()),
 		ape.LoganMiddleware(cfg.Log()),
 		ape.CtxMiddleWare(
@@ -28,6 +28,7 @@ func Router( cfg config.Config) chi.Router {
 			r.Post("/sign-in", handlers.LoginUser)
 			r.Post("/check_token", handlers.CheckToken)
 			r.Get("/get_user/{email}", handlers.GetUser)
+			r.Post("/balance/create", handlers.CreateBalance)
 		})
 	})
 

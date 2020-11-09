@@ -8,36 +8,36 @@ import (
 	"gitlab.com/distributed_lab/ape/problems"
 	"gitlab.com/distributed_lab/logan/v3/errors"
 	"net/http"
+	"strconv"
 )
 
 //requests
-func CheckTokenRequest(r *http.Request) (resources.CheckTokenResponse, error) {
-	var request resources.CheckTokenResponse
+func CreateBalanceRequest(r *http.Request) (resources.CreateBalanceResponse, error) {
+	var request resources.CreateBalanceResponse
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		return request, errors.Wrap(err, "failed to unmarshal")
 	}
 
-	return request, validateCheckTokenRequest(request)
+	return request, validateCreateBalanceRequest(request)
 }
 
-func validateCheckTokenRequest(r resources.CheckTokenResponse) error {
+func validateCreateBalanceRequest(r resources.CreateBalanceResponse) error {
 	return validation.Errors{
-		"/data/attributes/email": validation.Validate(&r.Data.Attributes.Email, validation.Required),
+		"/data/attributes/currency": validation.Validate(&r.Data.Attributes.Currency, validation.Required),
 	}.Filter()
 }
 
-//
-func CheckToken(w http.ResponseWriter, r *http.Request) {
-	request, err := CheckTokenRequest(r)
+func CreateBalance(w http.ResponseWriter, r *http.Request) {
+	_, err := CreateBalanceRequest(r)
 	if err != nil {
 		Log(r).WithError(err).Error("failed to parse request")
 		ape.RenderErr(w, problems.BadRequest(err)...)
 		return
 	}
-
-	user, err := User(r).GetByEmail(request.Data.Attributes.Email)
+	userId, _ := strconv.Atoi(r.Header.Get("user-id"))
+	user, err := User(r).GetById(userId)
 	if err != nil {
-		Log(r).WithError(err).Error("failed to get user by email")
+		Log(r).WithError(err).Error("failed to get user by id")
 		ape.RenderErr(w, problems.InternalError())
 		return
 	}

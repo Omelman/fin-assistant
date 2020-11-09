@@ -4,10 +4,11 @@ import (
 	"crypto/rand"
 	"encoding/json"
 	validation "github.com/go-ozzo/ozzo-validation"
+	"strconv"
 	"time"
 
 	"encoding/hex"
-	"github.com/fin-assistant/internal/resources"
+	"github.com/fin-assistant/internal/services/api/resources"
 	"gitlab.com/distributed_lab/ape"
 	"gitlab.com/distributed_lab/ape/problems"
 	"gitlab.com/distributed_lab/logan/v3/errors"
@@ -27,8 +28,8 @@ func NewLoginUserRequest(r *http.Request) (resources.LoginUserResponse, error) {
 
 func validateLoginUserRequest(r resources.LoginUserResponse) error {
 	return validation.Errors{
-		"/implementation/attributes/email":    validation.Validate(&r.Data.Attributes.Email, validation.Required),
-		"/implementation/attributes/password": validation.Validate(&r.Data.Attributes.Password, validation.Required),
+		"/data/attributes/email":    validation.Validate(&r.Data.Attributes.Email, validation.Required),
+		"/data/attributes/password": validation.Validate(&r.Data.Attributes.Password, validation.Required),
 	}.Filter()
 }
 
@@ -70,14 +71,17 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("token", tokenString)
-	response := resources.CheckTokenResponse{
-		Data: resources.CheckToken{
+	w.Header().Set("user-id", strconv.Itoa(data.ID))
+	response := resources.CreateUserResponse{
+		Data: resources.CreateUser{
 			Key: resources.Key{
 				ID:   time.Now().UTC().String(),
 				Type: resources.LOGIN_USER,
 			},
-			Attributes: resources.CheckTokenAttributes{
-				Email: request.Data.Attributes.Email,
+			Attributes: resources.CreateUserAttributes{
+				Email:     data.Email,
+				Firstname: data.Firstname,
+				Lastname:  data.Lastname,
 			},
 		},
 	}
