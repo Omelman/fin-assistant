@@ -13,6 +13,7 @@ func Router(cfg config.Config) chi.Router {
 	r := chi.NewRouter()
 	r.Use(
 		middleware.SetHeader("Access-Control-Allow-Origin", "*"),
+		middleware.SetHeader("Access-Control-Allow-Methods", "GET, POST"),
 		ape.RecoverMiddleware(cfg.Log()),
 		ape.LoganMiddleware(cfg.Log()),
 		ape.CtxMiddleWare(

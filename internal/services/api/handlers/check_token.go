@@ -49,31 +49,6 @@ func CheckToken(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response := resources.CheckTokenResponse{
-		Data: resources.CheckToken{
-			Key: resources.NewKeyInt64(1, resources.GET_USER),
-			Attributes: resources.CheckTokenAttributes{
-				Id:    &user.ID,
-				Email: user.Email,
-			},
-		},
-		Included: resources.Included{},
-	}
-
-	responseJson, err := json.Marshal(response)
-	if err != nil {
-		Log(r).WithError(err).Error("failed to marshal json")
-		ape.Render(w, problems.InternalError())
-		return
-	}
-
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-
-	_, err = w.Write(responseJson)
-	if err != nil {
-		Log(r).WithError(err).Error("failed to write a response")
-		ape.Render(w, problems.InternalError())
-		return
-	}
 }
