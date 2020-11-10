@@ -13,13 +13,17 @@ func Router(cfg config.Config) chi.Router {
 	r := chi.NewRouter()
 	r.Use(
 		middleware.SetHeader("Access-Control-Allow-Origin", "*"),
-		middleware.SetHeader("Access-Control-Allow-Methods", "GET, POST"),
-		middleware.SetHeader("Access-Control-Allow-Headers", "Content-Type"),
+		middleware.SetHeader("Access-Control-Allow-Methods", "*"),
+		middleware.SetHeader("Access-Control-Allow-Headers", "user-id,token"),
 		ape.RecoverMiddleware(cfg.Log()),
 		ape.LoganMiddleware(cfg.Log()),
 		ape.CtxMiddleWare(
 			handlers.CtxLog(cfg.Log()),
 			handlers.CtxUser(implementation.NewUsers(cfg.DB())),
+			handlers.CtxBalance(implementation.NewBalance(cfg.DB())),
+			handlers.CtxWork(implementation.NewWork(cfg.DB())),
+			handlers.CtxTransaction(implementation.NewTransaction(cfg.DB())),
+			handlers.CtxGoal(implementation.NewGoal(cfg.DB())),
 			handlers.CtxEmail(cfg.Email()),
 		),
 	)

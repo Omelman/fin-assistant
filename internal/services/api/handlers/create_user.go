@@ -31,9 +31,9 @@ func validateCreateUserRequest(r resources.CreateUserResponse) error {
 	}
 
 	err = validation.Errors{
-		"/implementation/attributes/firstname": validation.Validate(&r.Data.Attributes.Firstname, validation.Required),
-		"/implementation/attributes/lastname":  validation.Validate(&r.Data.Attributes.Lastname, validation.Required),
-		"/implementation/attributes/password":  validation.Validate(&r.Data.Attributes.Password, validation.Required),
+		"/data/attributes/firstname": validation.Validate(&r.Data.Attributes.Firstname, validation.Required),
+		"/data/attributes/lastname":  validation.Validate(&r.Data.Attributes.Lastname, validation.Required),
+		"/data/attributes/password":  validation.Validate(&r.Data.Attributes.Password, validation.Required),
 	}.Filter()
 	if err != nil {
 		return err
