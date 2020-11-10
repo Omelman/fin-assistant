@@ -31,8 +31,8 @@ func (q *Transactions) New() interfaces.Transactions {
 	return NewTransaction(q.db)
 }
 
-func (q *Transactions) Create(user interfaces.Transaction) error {
-	clauses := structs.Map(user)
+func (q *Transactions) Create(transaction interfaces.Transaction) error {
+	clauses := structs.Map(transaction)
 
 	var id int64
 	stmt := sq.Insert(transactionTableName).SetMap(clauses).Suffix("returning id")

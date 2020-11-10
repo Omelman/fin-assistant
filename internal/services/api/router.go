@@ -32,9 +32,11 @@ func Router(cfg config.Config) chi.Router {
 		r.Route("/assistant", func(r chi.Router) {
 			r.Post("/sign-up", handlers.CreateUser)
 			r.Post("/sign-in", handlers.LoginUser)
-			r.Post("/check_token", handlers.CheckToken)
+			r.Get("/check_session", handlers.CheckSession)
 			r.Get("/get_user/{email}", handlers.GetUser)
-			r.Post("/balance/create", handlers.CreateBalance)
+			r.Post("/balance", handlers.CreateBalance)
+			r.Get("/balance", handlers.GetAllBalance)
+			r.Post("/transaction", handlers.CreateTransaction)
 		})
 	})
 

@@ -13,11 +13,11 @@ type Transactions interface {
 }
 
 type Transaction struct {
-	ID          int           `db:"id" structs:"-"`
-	Date        time.Duration `db:"date" structs:"date"`
-	Description string        `db:"description" structs:"description"`
-	Amount      int           `db:"amount" structs:"amount"`
-	Category    string        `db:"category" structs:"category"`
-	Include     bool          `db:"include" structs:"include"`
-	BalanceId   int           `db:"balance_id" structs:"-"`
+	ID          int       `db:"id" structs:"-"`
+	Date        time.Time `db:"date" structs:"date"`
+	Description string    `db:"description" structs:"description"`
+	Amount      int       `db:"amount" structs:"amount"`
+	Category    string    `db:"category" structs:"category"`
+	Include     bool      `db:"include" structs:"include"`
+	BalanceId   int       `db:"balance_id" structs:"-"`
 }

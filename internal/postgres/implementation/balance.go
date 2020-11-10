@@ -31,8 +31,8 @@ func (q *Balances) New() interfaces.Balances {
 	return NewBalance(q.db)
 }
 
-func (q *Balances) Create(user interfaces.Balance) error {
-	clauses := structs.Map(user)
+func (q *Balances) Create(balance interfaces.Balance) error {
+	clauses := structs.Map(balance)
 
 	var id int64
 	stmt := sq.Insert(balanceTableName).SetMap(clauses).Suffix("returning id")
@@ -58,7 +58,14 @@ func (q *Balances) Get() (*interfaces.Balance, error) {
 
 func (q *Balances) GetById(id int) (*interfaces.Balance, error) {
 	var user interfaces.Balance
-	stmt := sq.Select("*").From(usersTableName).Where("id = ?", id)
+	stmt := sq.Select("*").From(balanceTableName).Where("id = ?", id)
 	err := q.db.Get(&user, stmt)
+	return &user, err
+}
+
+func (q *Balances) GetAllBalances(id int) (*[]interfaces.Balance, error) {
+	var user []interfaces.Balance
+	stmt := sq.Select("*").From(balanceTableName).Where("user_id = ?", id)
+	err := q.db.Select(&user, stmt)
 	return &user, err
 }

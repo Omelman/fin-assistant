@@ -4,6 +4,6 @@
 
 package resources
 
-type CreateBalanceAttributes struct {
+type BalanceAttributes struct {
 	Currency string `json:"currency,omitempty"`
 }
