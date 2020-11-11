@@ -5,16 +5,14 @@ import (
 	"github.com/fin-assistant/internal/postgres/implementation"
 	"github.com/fin-assistant/internal/services/api/handlers"
 	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
+	"github.com/go-chi/cors"
 	"gitlab.com/distributed_lab/ape"
 )
 
 func Router(cfg config.Config) chi.Router {
 	r := chi.NewRouter()
 	r.Use(
-		middleware.SetHeader("Access-Control-Allow-Origin", "*"),
-		middleware.SetHeader("Access-Control-Allow-Methods", "*"),
-		middleware.SetHeader("Access-Control-Allow-Headers", "user-id,token"),
+		cors.AllowAll().Handler,
 		ape.RecoverMiddleware(cfg.Log()),
 		ape.LoganMiddleware(cfg.Log()),
 		ape.CtxMiddleWare(
