@@ -36,27 +36,14 @@ func CreateBalance(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	err = CheckToken(r)
+	if err != nil {
+		Log(r).WithError(err).Error("failed to check token")
+		ape.RenderErr(w, problems.InternalError())
+		return
+	}
+
 	userId, err := strconv.Atoi(r.Header.Get("user-id"))
-	if err != nil {
-		Log(r).WithError(err).Error("failed to parse user-id")
-		ape.RenderErr(w, problems.InternalError())
-		return
-	}
-
-	user, err := User(r).GetById(userId)
-	if err != nil {
-		Log(r).WithError(err).Error("failed to get user by id")
-		ape.RenderErr(w, problems.InternalError())
-		return
-	}
-
-	if user.Token != r.Header.Get("token") {
-		Log(r).Error("wrong token")
-		ape.RenderErr(w, problems.BadRequest(validation.Errors{
-			"header/token": errors.New("wrong token")})...)
-		return
-	}
-
 	balance := interfaces.Balance{
 		Currency: request.Data.Attributes.Currency,
 		UserId:   userId,
