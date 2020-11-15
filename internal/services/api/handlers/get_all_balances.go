@@ -39,7 +39,8 @@ func GetAllBalance(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for _, balances := range *balances {
-		response.Data = append(response.Data, *balances.Resource())
+		amount, _ := Balance(r).GetRestOnBalance(balances.UserId, balances.ID)
+		response.Data = append(response.Data, *balances.Resource(*amount))
 	}
 
 	ape.Render(w, response)

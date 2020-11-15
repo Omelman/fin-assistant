@@ -19,5 +19,5 @@ type Transaction struct {
 	Amount      int       `db:"amount" structs:"amount"`
 	Category    string    `db:"category" structs:"category"`
 	Include     bool      `db:"include" structs:"include"`
-	BalanceId   int       `db:"balance_id" structs:"-"`
+	BalanceId   int       `db:"balance_id" structs:"balance_id"`
 }

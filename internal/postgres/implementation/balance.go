@@ -2,6 +2,7 @@ package implementation
 
 import (
 	"database/sql"
+	"fmt"
 	sq "github.com/Masterminds/squirrel"
 	"github.com/fatih/structs"
 	"github.com/fin-assistant/internal/postgres/interfaces"
@@ -68,6 +69,15 @@ func (q *Balances) GetAllBalances(id int) (*[]interfaces.Balance, error) {
 	stmt := sq.Select("*").From(balanceTableName).Where("user_id = ?", id)
 	err := q.db.Select(&user, stmt)
 	return &user, err
+}
+
+func (q *Balances) GetRestOnBalance(userId int, balanceId int) (*int, error) {
+	var summ int
+	stmt := sq.Select(fmt.Sprintf("SUM(transaction.amount) FROM users "+
+		"INNER JOIN balance ON users.id = balance.user_id INNER JOIN transaction "+
+		"ON transaction.balance_id = balance.id WHERE balance.id = %d AND users.id = %d", balanceId, userId))
+	err := q.db.Get(&summ, stmt)
+	return &summ, err
 }
 
 func (q *Balances) DeleteBalance(userId int, balanceId int) error {
