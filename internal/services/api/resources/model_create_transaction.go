@@ -14,9 +14,9 @@ type CreateTransactionResponse struct {
 }
 
 type CreateTransactionListResponse struct {
-	Data     []Balance `json:"data"`
-	Included Included  `json:"included"`
-	Links    *Links    `json:"links"`
+	Data     []CreateTransaction `json:"data"`
+	Included Included            `json:"included"`
+	Links    *Links              `json:"links"`
 }
 
 // MustCheckToken - returns CheckToken from include collection.

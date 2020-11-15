@@ -2,6 +2,7 @@ package implementation
 
 import (
 	"database/sql"
+	"fmt"
 	sq "github.com/Masterminds/squirrel"
 	"github.com/fatih/structs"
 	"github.com/fin-assistant/internal/postgres/interfaces"
@@ -61,4 +62,13 @@ func (q *Transactions) GetById(id int) (*interfaces.Transaction, error) {
 	stmt := sq.Select("*").From(transactionTableName).Where("id = ?", id)
 	err := q.db.Get(&user, stmt)
 	return &user, err
+}
+
+func (q *Transactions) GetAllTransaction(userId int) (*[]interfaces.Transaction, error) {
+	var transaction []interfaces.Transaction
+	stmt := sq.Select(fmt.Sprintf("transaction.* FROM users "+
+		"INNER JOIN balance ON users.id = balance.user_id INNER JOIN transaction "+
+		"ON transaction.balance_id = balance.id WHERE users.id = %d", userId))
+	err := q.db.Select(&transaction, stmt)
+	return &transaction, err
 }

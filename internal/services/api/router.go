@@ -36,6 +36,7 @@ func Router(cfg config.Config) chi.Router {
 			r.Get("/balance", handlers.GetAllBalance)
 			r.Delete("/balance/{id}", handlers.DeleteBalance)
 			r.Post("/transaction", handlers.CreateTransaction)
+			r.Get("/transaction", handlers.GetAllTransaction)
 		})
 	})
 
