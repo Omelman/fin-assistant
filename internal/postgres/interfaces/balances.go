@@ -16,7 +16,7 @@ type Balances interface {
 type Balance struct {
 	ID       int    `db:"id" structs:"-"`
 	Currency string `db:"currency" structs:"currency"`
-	UserId   int    `db:"user_id" structs:"-"`
+	UserId   int    `db:"user_id" structs:"user_id"`
 }
 
 func (r *Balance) Resource() *resources.GetBalance {

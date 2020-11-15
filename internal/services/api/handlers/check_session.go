@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"errors"
 	"gitlab.com/distributed_lab/ape"
 	"gitlab.com/distributed_lab/ape/problems"
 	"net/http"
@@ -32,7 +33,7 @@ func CheckToken(r *http.Request) error {
 
 	if user.Token != r.Header.Get("token") {
 		Log(r).Error("wrong token")
-		return err
+		return errors.New("wrong token")
 	}
 
 	return nil
