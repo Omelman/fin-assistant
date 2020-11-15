@@ -10,6 +10,7 @@ import (
 	"gitlab.com/distributed_lab/logan/v3/errors"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 //requests
@@ -44,16 +45,38 @@ func CreateBalance(w http.ResponseWriter, r *http.Request) {
 	}
 
 	userId, err := strconv.Atoi(r.Header.Get("user-id"))
+
+	balances, err := Balance(r).GetAllBalances(userId)
+	if err != nil {
+		Log(r).WithError(err).Error("failed to get balances")
+		ape.RenderErr(w, problems.InternalError())
+		return
+	}
+	for _, value := range *balances {
+		if strings.ToUpper(request.Data.Attributes.Currency) == value.Currency {
+			Log(r).Error("This currency already exist")
+			ape.RenderErr(w, problems.BadRequest(err)...)
+			return
+		}
+	}
+
 	balance := interfaces.Balance{
-		Currency: request.Data.Attributes.Currency,
+		Currency: strings.ToUpper(request.Data.Attributes.Currency),
 		UserId:   userId,
 	}
-	err = Balance(r).Create(balance)
+	balanceId, err := Balance(r).Create(balance)
 	if err != nil {
 		Log(r).WithError(err).Error("failed to create balance")
 		ape.RenderErr(w, problems.InternalError())
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
+	response := resources.ReturnBalanceResponse{
+		Data: resources.ReturnBalance{
+			Attributes: resources.ReturnBalanceAttributes{
+				BalanceId: balanceId,
+			},
+		},
+	}
+	ape.Render(w, response)
 }

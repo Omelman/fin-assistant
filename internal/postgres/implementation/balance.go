@@ -31,13 +31,13 @@ func (q *Balances) New() interfaces.Balances {
 	return NewBalance(q.db)
 }
 
-func (q *Balances) Create(balance interfaces.Balance) error {
+func (q *Balances) Create(balance interfaces.Balance) (int, error) {
 	clauses := structs.Map(balance)
 
-	var id int64
+	var id int
 	stmt := sq.Insert(balanceTableName).SetMap(clauses).Suffix("returning id")
 	err := q.db.Get(&id, stmt)
-	return err
+	return id, err
 }
 
 func (q *Balances) Transaction(fn func(q interfaces.Balances) error) (err error) {
@@ -68,4 +68,11 @@ func (q *Balances) GetAllBalances(id int) (*[]interfaces.Balance, error) {
 	stmt := sq.Select("*").From(balanceTableName).Where("user_id = ?", id)
 	err := q.db.Select(&user, stmt)
 	return &user, err
+}
+
+func (q *Balances) DeleteBalance(userId int, balanceId int) error {
+	stmt := sq.Delete(balanceTableName).Where("user_id = ?", userId).
+		Where("id = ?", balanceId)
+	err := q.db.Exec(stmt)
+	return err
 }
