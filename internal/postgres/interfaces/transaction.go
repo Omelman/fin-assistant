@@ -13,6 +13,10 @@ type Transactions interface {
 	GetById(id int) (*Transaction, error)
 	GetAllTransaction(userId int) (*[]Transaction, error)
 
+	Update(transaction Transaction, transaction_id int) error
+
+	DeleteTransaction(userId int, transactionId int) error
+
 	Transaction(fn func(q Transactions) error) (err error)
 }
 
@@ -29,12 +33,13 @@ type Transaction struct {
 func (r *Transaction) Resource() *resources.CreateTransaction {
 	return &resources.CreateTransaction{
 		Attributes: resources.CreateTransactionAttributes{
-			Date:        r.Date.Format("2006-01-02"),
-			Description: r.Description,
-			Amount:      r.Amount,
-			Category:    r.Category,
-			Include:     r.Include,
-			BalaceId:    r.BalanceId,
+			Date:          r.Date.Format("2006-01-02"),
+			Description:   r.Description,
+			Amount:        r.Amount,
+			Category:      r.Category,
+			Include:       r.Include,
+			BalaceId:      r.BalanceId,
+			TransactionId: r.ID,
 		},
 	}
 }

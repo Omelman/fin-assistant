@@ -72,3 +72,18 @@ func (q *Transactions) GetAllTransaction(userId int) (*[]interfaces.Transaction,
 	err := q.db.Select(&transaction, stmt)
 	return &transaction, err
 }
+
+func (q *Transactions) Update(transaction interfaces.Transaction, transaction_id int) error {
+	clauses := structs.Map(transaction)
+
+	stmt := sq.Update(transactionTableName).SetMap(clauses).Where("id = ?", transaction_id)
+	err := q.db.Exec(stmt)
+	return err
+}
+
+func (q Transactions) DeleteTransaction(userId int, transactionId int) error {
+	stmt := sq.Delete(transactionTableName).Where("user_id = ?", userId).
+		Where("id = ?", transactionId)
+	err := q.db.Exec(stmt)
+	return err
+}
