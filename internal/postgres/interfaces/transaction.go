@@ -37,7 +37,7 @@ func (r *Transaction) Resource() *resources.CreateTransaction {
 			Description:   r.Description,
 			Amount:        r.Amount,
 			Category:      r.Category,
-			Include:       &r.Include,
+			Include:       r.Include,
 			BalaceId:      r.BalanceId,
 			TransactionId: r.ID,
 		},

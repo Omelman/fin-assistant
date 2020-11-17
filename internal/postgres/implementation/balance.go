@@ -80,6 +80,14 @@ func (q *Balances) GetRestOnBalance(userId int, balanceId int) (*int, error) {
 	return &summ, err
 }
 
+func (q *Balances) Update(balance interfaces.Balance) error {
+	clauses := structs.Map(balance)
+
+	stmt := sq.Update(balanceTableName).SetMap(clauses).Where("id = ?", balance.ID)
+	err := q.db.Exec(stmt)
+	return err
+}
+
 func (q *Balances) DeleteBalance(userId int, balanceId int) error {
 	stmt := sq.Delete(balanceTableName).Where("user_id = ?", userId).
 		Where("id = ?", balanceId)

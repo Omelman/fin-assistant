@@ -10,6 +10,7 @@ type Balances interface {
 	GetById(id int) (*Balance, error)
 	GetAllBalances(id int) (*[]Balance, error)
 	DeleteBalance(userId int, balanceId int) error
+	Update(balance Balance) error
 	GetRestOnBalance(userId int, balanceId int) (*int, error)
 
 	Transaction(fn func(q Balances) error) (err error)

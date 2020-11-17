@@ -60,7 +60,7 @@ func UpdateTransaction(w http.ResponseWriter, r *http.Request) {
 		Description: request.Data.Attributes.Description,
 		Amount:      request.Data.Attributes.Amount,
 		Category:    request.Data.Attributes.Category,
-		Include:     *request.Data.Attributes.Include,
+		Include:     request.Data.Attributes.Include,
 		BalanceId:   request.Data.Attributes.BalaceId,
 	}
 	err = Transaction(r).Update(newTransaction, request.Data.Attributes.TransactionId)

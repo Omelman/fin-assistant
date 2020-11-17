@@ -7,5 +7,5 @@ package resources
 type GetBalanceAttributes struct {
 	Currency  string `json:"currency"`
 	BalanceId int    `json:"balance_id"`
-	Amount    int    `json:"amount"`
+	Amount    int    `json:"amount,omitempty"`
 }
