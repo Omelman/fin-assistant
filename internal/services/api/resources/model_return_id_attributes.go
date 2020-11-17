@@ -5,5 +5,5 @@
 package resources
 
 type ReturnIdAttributes struct {
-	Id int `json:"balance_id,omitempty"`
+	Id int `json:"id,omitempty"`
 }
