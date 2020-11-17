@@ -63,12 +63,19 @@ func CreateTransaction(w http.ResponseWriter, r *http.Request) {
 		Include:     request.Data.Attributes.Include,
 		BalanceId:   request.Data.Attributes.BalaceId,
 	}
-	err = Transaction(r).Create(newTransaction)
+	transactionId, err := Transaction(r).Create(newTransaction)
 	if err != nil {
 		Log(r).WithError(err).Error("failed to create transaction")
 		ape.RenderErr(w, problems.InternalError())
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
+	response := resources.ReturnIdResponse{
+		Data: resources.ReturnId{
+			Attributes: resources.ReturnIdAttributes{
+				Id: transactionId,
+			},
+		},
+	}
+	ape.Render(w, response)
 }

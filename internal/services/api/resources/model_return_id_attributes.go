@@ -4,6 +4,6 @@
 
 package resources
 
-type ReturnBalanceAttributes struct {
-	BalanceId int `json:"balance_id,omitempty"`
+type ReturnIdAttributes struct {
+	Id int `json:"balance_id,omitempty"`
 }

@@ -8,7 +8,7 @@ import (
 type Transactions interface {
 	New() Transactions
 
-	Create(User Transaction) error
+	Create(User Transaction) (int, error)
 	Get() (*Transaction, error)
 	GetById(id int) (*Transaction, error)
 	GetAllTransaction(userId int) (*[]Transaction, error)

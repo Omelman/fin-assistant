@@ -32,13 +32,13 @@ func (q *Transactions) New() interfaces.Transactions {
 	return NewTransaction(q.db)
 }
 
-func (q *Transactions) Create(transaction interfaces.Transaction) error {
+func (q *Transactions) Create(transaction interfaces.Transaction) (int, error) {
 	clauses := structs.Map(transaction)
 
-	var id int64
+	var id int
 	stmt := sq.Insert(transactionTableName).SetMap(clauses).Suffix("returning id")
 	err := q.db.Get(&id, stmt)
-	return err
+	return id, err
 }
 
 func (q *Transactions) Transaction(fn func(q interfaces.Transactions) error) (err error) {

@@ -71,10 +71,10 @@ func CreateBalance(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response := resources.ReturnBalanceResponse{
-		Data: resources.ReturnBalance{
-			Attributes: resources.ReturnBalanceAttributes{
-				BalanceId: balanceId,
+	response := resources.ReturnIdResponse{
+		Data: resources.ReturnId{
+			Attributes: resources.ReturnIdAttributes{
+				Id: balanceId,
 			},
 		},
 	}
