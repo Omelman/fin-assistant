@@ -7,8 +7,8 @@ package resources
 type CreateTransactionAttributes struct {
 	Date        string `json:"date,omitempty"`
 	Description string `json:"description,omitempty"`
-	Amount      int    `json:"amount,string,omitempty"`
+	Amount      int    `json:"amount,string,int,omitempty"`
 	Category    string `json:"category,omitempty"`
-	Include     bool   `json:"include,string,omitempty"`
-	BalaceId    int    `json:"balance_id,omitempty"`
+	Include     bool   `json:"include,string,bool,omitempty"`
+	BalaceId    int    `json:"balance_id,string,int,omitempty"`
 }
