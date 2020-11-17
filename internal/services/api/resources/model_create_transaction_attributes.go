@@ -9,7 +9,7 @@ type CreateTransactionAttributes struct {
 	Description   string `json:"description,omitempty"`
 	Amount        int    `json:"amount,string,omitempty"`
 	Category      string `json:"category,omitempty"`
-	Include       bool   `json:"include,string,omitempty"`
+	Include       *bool  `json:"include,omitempty"`
 	BalaceId      int    `json:"balance_id,string,omitempty"`
 	TransactionId int    `json:"transaction_id,string,omitempty"`
 }

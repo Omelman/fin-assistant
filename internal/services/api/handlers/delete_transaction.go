@@ -24,9 +24,7 @@ func DeleteTransaction(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	userId, err := strconv.Atoi(r.Header.Get("user-id"))
-
-	err = Transaction(r).DeleteTransaction(userId, transactionId)
+	err = Transaction(r).DeleteTransaction(transactionId)
 	if err != nil {
 		Log(r).WithError(err).Error("failed to delete balance")
 		ape.RenderErr(w, problems.InternalError())

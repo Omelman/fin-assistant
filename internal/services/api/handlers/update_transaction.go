@@ -19,7 +19,7 @@ func UpdateTransactionRequest(r *http.Request) (resources.CreateTransactionRespo
 		return request, errors.Wrap(err, "failed to unmarshal")
 	}
 
-	return request, validateCreateTransactionRequest(request)
+	return request, validateUpdateTransactionRequest(request)
 }
 
 func validateUpdateTransactionRequest(r resources.CreateTransactionResponse) error {
@@ -29,7 +29,7 @@ func validateUpdateTransactionRequest(r resources.CreateTransactionResponse) err
 		"/data/attributes/category":    validation.Validate(&r.Data.Attributes.Category, validation.Required),
 		"/data/attributes/description": validation.Validate(&r.Data.Attributes.Description, validation.Required),
 		"/data/attributes/balance_id":  validation.Validate(&r.Data.Attributes.BalaceId, validation.Required),
-		"/data/attributes/include":     validation.Validate(&r.Data.Attributes.Include, validation.Required),
+		"/data/attributes/include":     validation.Validate(&r.Data.Attributes.Include, validation.NotNil),
 	}.Filter()
 }
 
@@ -60,7 +60,7 @@ func UpdateTransaction(w http.ResponseWriter, r *http.Request) {
 		Description: request.Data.Attributes.Description,
 		Amount:      request.Data.Attributes.Amount,
 		Category:    request.Data.Attributes.Category,
-		Include:     request.Data.Attributes.Include,
+		Include:     *request.Data.Attributes.Include,
 		BalanceId:   request.Data.Attributes.BalaceId,
 	}
 	err = Transaction(r).Update(newTransaction, request.Data.Attributes.TransactionId)
