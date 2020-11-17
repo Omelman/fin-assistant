@@ -3,12 +3,12 @@ log:
   disable_sentry: true
 
 db:
-  url: postgres://assistant:assistant@localhost:5432/assistant?sslmode=disable
+  url: postgres://assistant:assistant@assistant_db:5432/assistant?sslmode=disable
   max_open_connection: 50
   max_idle_connections: 50
 
 listener:
-  addr: :4000
+  addr: :8000
 
 email:
   address: example@mail.com
