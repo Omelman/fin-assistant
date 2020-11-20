@@ -25,6 +25,7 @@ require (
 	gitlab.com/distributed_lab/kit v1.8.1
 	gitlab.com/distributed_lab/logan v3.7.2+incompatible
 	gitlab.com/distributed_lab/lorem v0.2.0 // indirect
+	gitlab.com/distributed_lab/running v0.0.0-20200706131153-4af0e83eb96c
 	golang.org/x/crypto v0.0.0-20200820211705-5c72a883971a
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/validator.v2 v2.0.0-20200605151824-2b28d334fa05

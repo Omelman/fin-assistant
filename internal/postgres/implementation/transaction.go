@@ -81,7 +81,7 @@ func (q *Transactions) Update(transaction interfaces.Transaction, transactionId 
 	return err
 }
 
-func (q Transactions) DeleteTransaction(transactionId int) error {
+func (q *Transactions) DeleteTransaction(transactionId int) error {
 	stmt := sq.Delete(transactionTableName).Where("id = ?", transactionId)
 	err := q.db.Exec(stmt)
 	return err

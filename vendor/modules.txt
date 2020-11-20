@@ -138,6 +138,9 @@ gitlab.com/distributed_lab/logan/v3/fields
 # gitlab.com/distributed_lab/lorem v0.2.0
 ## explicit
 gitlab.com/distributed_lab/lorem
+# gitlab.com/distributed_lab/running v0.0.0-20200706131153-4af0e83eb96c
+## explicit
+gitlab.com/distributed_lab/running
 # golang.org/x/crypto v0.0.0-20200820211705-5c72a883971a
 ## explicit
 golang.org/x/crypto/bcrypt

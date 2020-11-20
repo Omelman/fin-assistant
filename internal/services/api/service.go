@@ -9,8 +9,8 @@ import (
 )
 
 type service struct {
-	cfg     config.Config
-	ctx     context.Context
+	cfg config.Config
+	ctx context.Context
 
 	logger *logan.Entry
 }
@@ -28,6 +28,7 @@ func (s *service) Run() error {
 
 	r := Router(s.cfg)
 
+	go NewGoalsChecker(s.cfg).Run(s.ctx)
 
 	err := http.Serve(s.cfg.Listener(), r)
 	if err != nil {

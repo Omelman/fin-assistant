@@ -2,6 +2,7 @@ package implementation
 
 import (
 	"database/sql"
+	"fmt"
 	sq "github.com/Masterminds/squirrel"
 	"github.com/fatih/structs"
 	"github.com/fin-assistant/internal/postgres/interfaces"
@@ -31,19 +32,25 @@ func (q *Goals) New() interfaces.Goals {
 	return NewGoal(q.db)
 }
 
-func (q *Goals) Create(user interfaces.Goal) error {
+func (q *Goals) Create(user interfaces.Goal) (int, error) {
 	clauses := structs.Map(user)
 
-	var id int64
+	var id int
 	stmt := sq.Insert(goalTableName).SetMap(clauses).Suffix("returning id")
 	err := q.db.Get(&id, stmt)
-	return err
+	return id, err
 }
 
 func (q *Goals) Transaction(fn func(q interfaces.Goals) error) (err error) {
 	return q.db.Transaction(func() error {
 		return fn(q)
 	})
+}
+
+func (q *Goals) Select() ([]interfaces.Goal, error) {
+	var result []interfaces.Goal
+	err := q.db.Select(&result, q.sql)
+	return result, err
 }
 
 func (q *Goals) Get() (*interfaces.Goal, error) {
@@ -56,9 +63,37 @@ func (q *Goals) Get() (*interfaces.Goal, error) {
 	return &user, err
 }
 
+func (q *Goals) GetAllGoals(userId int) (*[]interfaces.Goal, error) {
+	var goals []interfaces.Goal
+	stmt := sq.Select(fmt.Sprintf("goal.* FROM users "+
+		"INNER JOIN balance ON users.id = balance.user_id INNER JOIN goal "+
+		"ON goal.balance_id = balance.id WHERE users.id = %d", userId))
+	err := q.db.Select(&goals, stmt)
+	return &goals, err
+}
+
 func (q *Goals) GetById(id int) (*interfaces.Goal, error) {
 	var user interfaces.Goal
 	stmt := sq.Select("*").From(goalTableName).Where("id = ?", id)
 	err := q.db.Get(&user, stmt)
 	return &user, err
+}
+
+func (q *Goals) Update(goal interfaces.Goal, goalId int) error {
+	clauses := structs.Map(goalId)
+
+	stmt := sq.Update(goalTableName).SetMap(clauses).Where("id = ?", goalId)
+	err := q.db.Exec(stmt)
+	return err
+}
+
+func (q *Goals) DeleteGoal(goalId int) error {
+	stmt := sq.Delete(goalTableName).Where("id = ?", goalId)
+	err := q.db.Exec(stmt)
+	return err
+}
+
+func (q *Goals) FilterByStatus(date string) interfaces.Goals {
+	q.sql = q.sql.Where("date_finish = ?", date)
+	return q
 }
