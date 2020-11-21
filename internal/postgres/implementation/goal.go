@@ -88,7 +88,7 @@ func (q *Goals) GetById(id int) (*interfaces.Goal, error) {
 }
 
 func (q *Goals) Update(goal interfaces.Goal, goalId int) error {
-	clauses := structs.Map(goalId)
+	clauses := structs.Map(goal)
 
 	stmt := sq.Update(goalTableName).SetMap(clauses).Where("id = ?", goalId)
 	err := q.db.Exec(stmt)
