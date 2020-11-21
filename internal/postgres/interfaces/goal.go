@@ -13,6 +13,7 @@ type Goals interface {
 	Get() (*Goal, error)
 	GetById(id int) (*Goal, error)
 	GetAllGoals(userId int) (*[]Goal, error)
+	GetEmail(goalId int) (*string, error)
 	Update(goal Goal, goalId int) error
 
 	FilterByStatus(date string) Goals

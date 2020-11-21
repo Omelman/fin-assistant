@@ -63,6 +63,14 @@ func (q *Goals) Get() (*interfaces.Goal, error) {
 	return &user, err
 }
 
+func (q *Goals) GetEmail(goalId int) (*string, error) {
+	var email string
+	stmt := sq.Select(fmt.Sprintf("users.email FROM users INNER JOIN balance ON balance.user_id = users.id "+
+		"INNER JOIN goal ON goal.balance_id = balance.id WHERE goal.id = %d", goalId))
+	err := q.db.Get(&email, stmt)
+	return &email, err
+}
+
 func (q *Goals) GetAllGoals(userId int) (*[]interfaces.Goal, error) {
 	var goals []interfaces.Goal
 	stmt := sq.Select(fmt.Sprintf("goal.* FROM users "+

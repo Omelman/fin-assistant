@@ -73,6 +73,17 @@ func (q *Transactions) GetAllTransaction(userId int) (*[]interfaces.Transaction,
 	return &transaction, err
 }
 
+func (q *Transactions) GetExpenses(userId int, category string) (*int, error) {
+	var sum sql.NullInt32
+	stmt := sq.Select(fmt.Sprintf("SUM(transaction.amount) FROM users "+
+		"INNER JOIN balance ON users.id = balance.user_id INNER JOIN transaction "+
+		"ON transaction.balance_id = balance.id WHERE users.id = %d AND transaction.category = '%s'",
+		userId, category))
+	err := q.db.Get(&sum, stmt)
+	ans := int(sum.Int32)
+	return &ans, err
+}
+
 func (q *Transactions) Update(transaction interfaces.Transaction, transactionId int) error {
 	clauses := structs.Map(transaction)
 

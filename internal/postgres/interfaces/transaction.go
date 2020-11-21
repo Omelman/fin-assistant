@@ -12,6 +12,7 @@ type Transactions interface {
 	Get() (*Transaction, error)
 	GetById(id int) (*Transaction, error)
 	GetAllTransaction(userId int) (*[]Transaction, error)
+	GetExpenses(userId int, category string) (*int, error)
 
 	Update(transaction Transaction, transaction_id int) error
 

@@ -30,13 +30,13 @@ func NewGoalsChecker(cfg config.Config) *GoalsChecker {
 func (p *GoalsChecker) Run(ctx context.Context) {
 	p.log.Info("goals_checker started")
 	running.WithBackOff(ctx, p.log, "goals_checker", p.checkPending,
-		30*time.Second, 30*time.Second, 30*time.Second)
+		86400*time.Second, 30*time.Second, 30*time.Second)
 	p.log.Info("goals_checker finished")
 }
 
 func (p *GoalsChecker) checkPending(_ context.Context) error {
 	goals, err := p.Goals.New().
-		FilterByStatus(time.Now().Format("2006-01-02")).
+		FilterByStatus(time.Now().AddDate(0, 0, -1).Format("2006-01-02")).
 		Select()
 	if err != nil {
 		return errors.Wrap(err, "failed to get pending goals")
@@ -45,8 +45,12 @@ func (p *GoalsChecker) checkPending(_ context.Context) error {
 	for _, goal := range goals {
 		p.log.Debug(fmt.Sprintf("processing goal %d", goal.ID))
 
-		receiver := "cr.frog03@gmail.com"
-		body := fmt.Sprintf("Your goal ended : %d", goal.ID)
+		receiverPointer, err := p.Goals.New().GetEmail(goal.ID)
+		if err != nil {
+			return errors.Wrap(err, "failed to get receiver email")
+		}
+		receiver := *receiverPointer
+		body := fmt.Sprintf("Your goal ended (goal id: %d).\nPlease,check out our service", goal.ID)
 
 		address := p.Email.Address
 		password := p.Email.Password
