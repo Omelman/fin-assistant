@@ -9,14 +9,22 @@ type Transactions interface {
 	New() Transactions
 
 	Create(User Transaction) (int, error)
+
 	Get() (*Transaction, error)
 	GetById(id int) (*Transaction, error)
-	GetAllTransaction(userId int) (*[]Transaction, error)
+	Select() (*[]Transaction, error)
 	GetExpenses(userId int, category string) (*int, error)
 
 	Update(transaction Transaction, transaction_id int) error
 
 	DeleteTransaction(transactionId int) error
+
+	FilterByCategory(code string) Transactions
+	FilterByBalance(code string) Transactions
+	FilterByUserId(code int) Transactions
+	FilterOnlyBefore(time time.Time) Transactions
+	FilterOnlyAfter(time time.Time) Transactions
+	UserJoined() Transactions
 
 	Transaction(fn func(q Transactions) error) (err error)
 }

@@ -7,6 +7,7 @@ import (
 	"github.com/fatih/structs"
 	"github.com/fin-assistant/internal/postgres/interfaces"
 	"gitlab.com/distributed_lab/kit/pgdb"
+	"time"
 )
 
 const transactionTableName = "transaction"
@@ -41,6 +42,12 @@ func (q *Transactions) Create(transaction interfaces.Transaction) (int, error) {
 	return id, err
 }
 
+func (q *Transactions) Select() (*[]interfaces.Transaction, error) {
+	var result []interfaces.Transaction
+	err := q.db.Select(&result, q.sql)
+	return &result, err
+}
+
 func (q *Transactions) Transaction(fn func(q interfaces.Transactions) error) (err error) {
 	return q.db.Transaction(func() error {
 		return fn(q)
@@ -62,15 +69,6 @@ func (q *Transactions) GetById(id int) (*interfaces.Transaction, error) {
 	stmt := sq.Select("*").From(transactionTableName).Where("id = ?", id)
 	err := q.db.Get(&user, stmt)
 	return &user, err
-}
-
-func (q *Transactions) GetAllTransaction(userId int) (*[]interfaces.Transaction, error) {
-	var transaction []interfaces.Transaction
-	stmt := sq.Select(fmt.Sprintf("transaction.* FROM users "+
-		"INNER JOIN balance ON users.id = balance.user_id INNER JOIN transaction "+
-		"ON transaction.balance_id = balance.id WHERE users.id = %d", userId))
-	err := q.db.Select(&transaction, stmt)
-	return &transaction, err
 }
 
 func (q *Transactions) GetExpenses(userId int, category string) (*int, error) {
@@ -96,4 +94,37 @@ func (q *Transactions) DeleteTransaction(transactionId int) error {
 	stmt := sq.Delete(transactionTableName).Where("id = ?", transactionId)
 	err := q.db.Exec(stmt)
 	return err
+}
+
+func (q *Transactions) FilterByCategory(code string) interfaces.Transactions {
+	q.sql = q.sql.Where("category = ?", code)
+	return q
+}
+
+func (q *Transactions) FilterByBalance(code string) interfaces.Transactions {
+	q.sql = q.sql.Where("transaction.balance_id = ?", code)
+	return q
+}
+
+func (q *Transactions) FilterOnlyBefore(time time.Time) interfaces.Transactions {
+	q.sql = q.sql.Where(sq.Lt{"transaction.date": time})
+	return q
+}
+
+func (q *Transactions) FilterOnlyAfter(time time.Time) interfaces.Transactions {
+	q.sql = q.sql.Where(sq.Gt{"transaction.date": time})
+	return q
+}
+
+func (q *Transactions) UserJoined() interfaces.Transactions {
+	q.sql = q.sql.Join(fmt.Sprintf("%s on %s.balance_id = %s.id", balanceTableName,
+		transactionTableName, balanceTableName))
+	q.sql = q.sql.Join(fmt.Sprintf("%s on %s.user_id = %s.id", usersTableName,
+		balanceTableName, usersTableName))
+	return q
+}
+
+func (q *Transactions) FilterByUserId(code int) interfaces.Transactions {
+	q.sql = q.sql.Where(sq.Eq{fmt.Sprintf("%s.id", usersTableName): code})
+	return q
 }
