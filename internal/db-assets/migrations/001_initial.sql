@@ -32,7 +32,7 @@ create table transaction (
   amount int not null,
   category varchar(20) not null,
   include boolean not null,
-  balance_id bigserial not null references balance (id) on delete cascade
+  balance_id bigserial not null references balance (id) on delete cascade on update cascade
 );
 
 create table goal (
