@@ -7,6 +7,7 @@ import (
 	"github.com/fatih/structs"
 	"github.com/fin-assistant/internal/postgres/interfaces"
 	"gitlab.com/distributed_lab/kit/pgdb"
+	"strings"
 	"time"
 )
 
@@ -126,5 +127,18 @@ func (q *Transactions) UserJoined() interfaces.Transactions {
 
 func (q *Transactions) FilterByUserId(code int) interfaces.Transactions {
 	q.sql = q.sql.Where(sq.Eq{fmt.Sprintf("%s.id", usersTableName): code})
+	return q
+}
+
+func (q *Transactions) OrderByLatest() interfaces.Transactions {
+	q.sql = q.sql.OrderBy(fmt.Sprintf("transaction.date %s", "desc"))
+	return q
+}
+
+func (q *Transactions) Search(param string, col string) interfaces.Transactions {
+	param = strings.Replace(param, " ", "%", -1)
+	param = fmt.Sprint("%", param, "%")
+	print(param, col)
+	q.sql = q.sql.Where(sq.ILike{fmt.Sprintf("transaction.%s", col): param})
 	return q
 }

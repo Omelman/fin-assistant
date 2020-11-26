@@ -14,9 +14,7 @@ type Transactions interface {
 	GetById(id int) (*Transaction, error)
 	Select() (*[]Transaction, error)
 	GetExpenses(userId int, category string) (*int, error)
-
 	Update(transaction Transaction, transaction_id int) error
-
 	DeleteTransaction(transactionId int) error
 
 	FilterByCategory(code string) Transactions
@@ -24,6 +22,9 @@ type Transactions interface {
 	FilterByUserId(code int) Transactions
 	FilterOnlyBefore(time time.Time) Transactions
 	FilterOnlyAfter(time time.Time) Transactions
+
+	Search(param string, col string) Transactions
+	OrderByLatest() Transactions
 	UserJoined() Transactions
 
 	Transaction(fn func(q Transactions) error) (err error)

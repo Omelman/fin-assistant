@@ -14,10 +14,11 @@ import (
 
 //query
 const (
-	transactionListFilterCategory = "filter[category]"
-	transactionListFilterBalance  = "filter[balance]"
-	transactionListFilterDateFrom = "filter[date_from]"
-	transactionListFilterDateTo   = "filter[date_to]"
+	transactionListFilterCategory    = "filter[category]"
+	transactionListFilterBalance     = "filter[balance]"
+	transactionListFilterDateFrom    = "filter[date_from]"
+	transactionListFilterDateTo      = "filter[date_to]"
+	transactionListSearchDescription = "search[description]"
 )
 
 type GetTransactionList struct {
@@ -34,8 +35,8 @@ func getString(request *http.Request, name string) string {
 }
 
 type TransactionFilters struct {
-	Category, Balance *string
-	From, To          *time.Time
+	Category, Balance, Description *string
+	From, To                       *time.Time
 }
 
 func NewGetTransRequestList(r *http.Request) (*GetTransactionList, error) {
@@ -54,6 +55,11 @@ func (f *TransactionFilters) populate(r *http.Request) error {
 	balance := getString(r, transactionListFilterBalance)
 	if balance != "" {
 		f.Balance = &balance
+	}
+
+	description := getString(r, transactionListSearchDescription)
+	if description != "" {
+		f.Description = &description
 	}
 
 	if getString(r, transactionListFilterDateFrom) != "" {
@@ -106,6 +112,9 @@ func GetAllTransaction(w http.ResponseWriter, r *http.Request) {
 	if request.To != nil {
 		q = q.FilterOnlyBefore(*request.To)
 	}
+	if request.Description != nil {
+		q = q.Search(*request.Description, "description")
+	}
 
 	userId, err := strconv.Atoi(r.Header.Get("user-id"))
 	if err != nil {
@@ -114,7 +123,7 @@ func GetAllTransaction(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	transactions, err := q.UserJoined().FilterByUserId(userId).Select()
+	transactions, err := q.UserJoined().FilterByUserId(userId).OrderByLatest().Select()
 
 	response := resources.CreateTransactionListResponse{
 		Data: make([]resources.CreateTransaction, 0, len(*transactions)),
