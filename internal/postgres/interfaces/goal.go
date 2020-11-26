@@ -29,7 +29,7 @@ type Goal struct {
 	DateFinish  time.Time `db:"date_finish" structs:"date_finish"`
 	Description string    `db:"description" structs:"description"`
 	Amount      int       `db:"amount" structs:"amount"`
-	BalanceId   int       `db:"balance_id" structs:"-"`
+	BalanceId   int       `db:"balance_id" structs:"balance_id"`
 }
 
 func (r *Goal) Resource() *resources.CreateGoal {
