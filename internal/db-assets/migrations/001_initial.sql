@@ -41,7 +41,7 @@ create table goal (
   date_finish date,
   description text not null,
   amount int not null,
-  balance_id bigserial references balance (id) not null
+  balance_id bigserial references balance (id) not null on delete cascade on update cascade
 );
 
 -- +migrate Down
