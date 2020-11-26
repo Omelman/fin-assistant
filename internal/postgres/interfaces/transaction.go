@@ -13,8 +13,12 @@ type Transactions interface {
 	Get() (*Transaction, error)
 	GetById(id int) (*Transaction, error)
 	Select() (*[]Transaction, error)
+	//statistics
 	GetExpenses(userId int, category string) (*int, error)
-	Update(transaction Transaction, transaction_id int) error
+	GetOutcome(userId int, balanceId int) (*int, error)
+	GetIncome(userId int, balanceId int) (*int, error)
+	//
+	Update(transaction Transaction, transactionId int) error
 	DeleteTransaction(transactionId int) error
 
 	FilterByCategory(code string) Transactions

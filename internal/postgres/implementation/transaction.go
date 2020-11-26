@@ -138,7 +138,29 @@ func (q *Transactions) OrderByLatest() interfaces.Transactions {
 func (q *Transactions) Search(param string, col string) interfaces.Transactions {
 	param = strings.Replace(param, " ", "%", -1)
 	param = fmt.Sprint("%", param, "%")
-	print(param, col)
+
 	q.sql = q.sql.Where(sq.ILike{fmt.Sprintf("transaction.%s", col): param})
 	return q
+}
+
+func (q *Transactions) GetIncome(userId int, balanceId int) (*int, error) {
+	var sum sql.NullInt32
+	stmt := sq.Select(fmt.Sprintf("SUM(transaction.amount) FROM users "+
+		"INNER JOIN balance ON users.id = balance.user_id INNER JOIN transaction "+
+		"ON transaction.balance_id = balance.id WHERE users.id = %d AND transaction.balance_id= %d AND transaction.amount>0",
+		userId, balanceId))
+	err := q.db.Get(&sum, stmt)
+	ans := int(sum.Int32)
+	return &ans, err
+}
+
+func (q *Transactions) GetOutcome(userId int, balanceId int) (*int, error) {
+	var sum sql.NullInt32
+	stmt := sq.Select(fmt.Sprintf("SUM(transaction.amount) FROM users "+
+		"INNER JOIN balance ON users.id = balance.user_id INNER JOIN transaction "+
+		"ON transaction.balance_id = balance.id WHERE users.id = %d AND transaction.balance_id= %d AND transaction.amount<0",
+		userId, balanceId))
+	err := q.db.Get(&sum, stmt)
+	ans := int(sum.Int32)
+	return &ans, err
 }

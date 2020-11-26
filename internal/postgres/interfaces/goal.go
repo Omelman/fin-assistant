@@ -15,6 +15,7 @@ type Goals interface {
 	GetAllGoals(userId int) (*[]Goal, error)
 	GetEmail(goalId int) (*string, error)
 	Update(goal Goal, goalId int) error
+	CountRemainsGoals(userId int) (*int, error)
 
 	FilterByStatus(date string) Goals
 
