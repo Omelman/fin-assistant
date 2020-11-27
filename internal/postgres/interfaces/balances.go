@@ -31,3 +31,14 @@ func (r *Balance) Resource(amount int) *resources.GetBalance {
 		},
 	}
 }
+
+func (r *Balance) RemainResource(remain int, income int, outcome int) *resources.RemainGoals {
+	return &resources.RemainGoals{
+		Attributes: resources.RemainGoalsAttributes{
+			Remain:    remain,
+			Income:    income,
+			BalanceId: r.ID,
+			Outcome:   outcome,
+		},
+	}
+}

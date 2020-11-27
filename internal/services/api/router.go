@@ -48,6 +48,7 @@ func Router(cfg config.Config) chi.Router {
 			r.Delete("/goal/{id}", handlers.DeleteGoal)
 			r.Put("/goal", handlers.UpdateGoal)
 			r.Get("/goal", handlers.GetAllGoals)
+			r.Get("/goal/remain", handlers.GetRemainGoals)
 			//
 			r.Get("/expenses", handlers.GetAllExpenses)
 

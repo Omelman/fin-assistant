@@ -107,12 +107,14 @@ func (q *Goals) FilterByStatus(date string) interfaces.Goals {
 	return q
 }
 
-func (q *Goals) CountRemainsGoals(userId int) (*int, error) {
+func (q *Goals) CountRemainsGoals(userId int, balanceId int) (*int, error) {
 	var count sql.NullInt32
-	timeNow := time.Now().Format("2006-12-31")
+	timeNow := time.Now().Format("2006-01-02")
 	stmt := sq.Select(fmt.Sprintf("COUNT(goal.id) FROM users "+
 		"INNER JOIN balance ON users.id = balance.user_id INNER JOIN goal "+
-		"ON goal.balance_id = balance.id WHERE users.id = %d AND goal.date_finish > %s", userId, timeNow))
+		"ON goal.balance_id = balance.id WHERE users.id = %d AND goal.date_finish > to_date('%s','yyyy-mm-dd')  "+
+		"AND balance_id = %d",
+		userId, timeNow, balanceId))
 	err := q.db.Get(&count, stmt)
 	ans := int(count.Int32)
 	return &ans, err
